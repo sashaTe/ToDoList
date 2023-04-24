@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct ListView: View {
-    @State var items: [String] = ["This is the first title", "This is the second title", "This is the third title"]
+    @State var items: [ItemModel] = [ItemModel(title: "This is the first item", isComplited: false),
+    ItemModel(title: "This is the second item", isComplited: true),
+    ItemModel(title: "Third", isComplited: true)]
+    
     var body: some View {
         List {
-            ForEach(items, id: \.self) { item in
-                ListRowView(title: item )
+            ForEach(items) { item in
+                ListRowView(item: item)
             }
-            
+            .onDelete(perform: deleteItem)
+            .onMove(perform: moveItem)
         }
         .listStyle(.plain)
         .navigationTitle("ToDo List📝")
@@ -27,6 +31,12 @@ struct ListView: View {
             )}
                                
         }
+    }
+    func deleteItem(indexSet: IndexSet) {
+        items.remove(atOffsets: indexSet)
+    }
+    func moveItem(from: IndexSet, to: Int) {
+        items.move(fromOffsets: from, toOffset: to)
     }
 }
 

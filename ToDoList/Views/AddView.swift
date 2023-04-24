@@ -31,7 +31,7 @@ struct AddView: View {
                         .cornerRadius(10)
                 }
             }
-            .padding(15)
+            .padding(15 )
                    
                 
         }
